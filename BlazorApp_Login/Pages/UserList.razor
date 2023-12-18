@@ -1,0 +1,78 @@
+﻿@page "/userlist"
+@using BlazorApp_Login.Data;
+@inject BlazorApp_Login.Repositories.UserRepository userRepository
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<h3>Member List</h3>
+
+<a href="./add-member">Add Member</a>
+
+@if (userList == null || userList.Count == 0)
+{
+	<p>No Members to display</p>
+}
+else
+{
+	<table class=" table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Password</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		@foreach (var user in userList)
+		{
+			<tr>
+				<MemberDetail Member="user"></MemberDetail>
+			</tr>	
+		}
+	</table>
+}
+
+@code {
+	private List<User> userList;
+	private string UserEmail { get; set; } = string.Empty;
+
+	private async Task GetEmailFromLocalStorage()
+    {
+        var email = await JsRuntime.InvokeAsync<string>("localStorage.getItem", "email");
+
+        if (!string.IsNullOrEmpty(email))
+        {
+            UserEmail = email;
+            Console.WriteLine(UserEmail);
+        }
+    }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetEmailFromLocalStorage();
+		if (string.IsNullOrEmpty(UserEmail))
+		{
+			NavigationManager.NavigateTo("/login");
+		}
+		else
+		{
+
+			var result = await Http.GetFromJsonAsync<List<User >>("/api/User/getCourse?email=" + UserEmail);
+			Console.WriteLine(result);
+			if (result != null)
+			{
+				userList = result;
+			}
+		}
+	}
+	void ToLogin()
+	{
+		NavigationManager.NavigateTo("/login");
+	}
+
+	void ToReg()
+	{
+		NavigationManager.NavigateTo("/registration");
+	}
+
+}

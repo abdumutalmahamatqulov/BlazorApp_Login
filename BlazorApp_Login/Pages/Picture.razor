@@ -1,0 +1,21 @@
+﻿@page "/picture"
+@using BlazorApp_Login.Dto_s
+@inject NavigationManager NavigationManager
+<h3>Picture</h3>
+@inject IJSRuntime JsRuntime
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@null" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <body>
+            <a class="container" href="@NavigationUrls.Register">Registor</a>
+            <br />
+            <a class="container" href="@NavigationUrls.Login">Login</a>
+        </body>
+    </NotFound>
+</Router>
+@code {
+
+}

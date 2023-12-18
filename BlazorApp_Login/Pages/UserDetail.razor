@@ -1,0 +1,54 @@
+﻿<!-- UserDetail.razor -->
+@page "/userdetail"
+@using BlazorApp_Login.Data
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<td>
+    @user.UserId
+</td>
+<td>
+    @user.Email
+</td>
+<td>
+    @user.Password
+</td>
+<td>
+    @user.FullName
+</td>
+
+@code {
+    [Parameter]
+    public User user { get; set; }
+
+    [Parameter]
+    public EventCallback<string> DeleteUser { get; set; }
+
+    public void Delete()
+    {
+        DeleteUser.InvokeAsync(user.UserId);
+    }
+
+    private string UserEmail { get; set; } = string.Empty;
+
+  
+    private async Task ClearLocalStorage()
+    {
+        await JsRuntime.InvokeVoidAsync("clearLocalStorage");
+    }
+
+
+    void ToMain()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    void ToContact()
+    {
+        NavigationManager.NavigateTo("/contact");
+    }
+    void ToAbout()
+    {
+        NavigationManager.NavigateTo("/aboutus");
+    }
+}

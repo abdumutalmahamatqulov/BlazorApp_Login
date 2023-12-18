@@ -1,0 +1,138 @@
+﻿@page "/user"
+@using BlazorApp_Login.Dto_s;
+@inject BlazorApp_Login.Interface.IUserRepository userRepository
+@inject NavigationManager navigationManager
+@inherits LayoutComponentBase
+@inject BlazorApp_Login.Data.AddDbContext _context
+@inject IJSRuntime JsRuntime
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@null" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        
+<style>
+@@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+:root {
+  --darktomato: #753023;
+}
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  background-color: #222d45;
+  display: flex;
+}
+
+.container {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    margin: auto;
+
+}
+
+h3 {
+  margin: 0;
+  font-family: "Oxygen", sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: white;
+  text-shadow: 0 0 10px white;
+  font-size: 2rem;
+}
+p {
+  letter-spacing: 2px;
+  padding-top: 5px;
+  font-size: 1rem;
+  color: #FFF6;
+  margin: 0;
+  font-family: "Oxygen", sans-serif;
+}
+
+ a {
+  text-decoration: none;
+  justify-content: center;
+  width: 300px;
+  display: block;
+  margin-top: 35px;
+  border: 2px solid tomato;
+  cursor: pointer;
+  font-family: "Oxygen", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: #b1bcc8;
+  background-color: #0002;
+  border-radius: 14px;
+  padding: 16px 30px 16px 30px;
+  box-shadow: -8px -8px 17px #f664, 10px 10px 30px #000,
+    inset -1px -1px 2px #000, inset 1px 1px 3px #fff4;
+  animation: shadowLeave 0.3s;
+  gap:50px;
+}
+
+
+@@-webkit-keyframes shadowEnter {
+  0% {
+    box-shadow: -7px -7px 25px #f666, 10px 10px 30px #000,
+      inset -1px -1px 2px #000, inset 1px 1px 3px #fff4;
+    font-weight: 400;
+    letter-spacing: 5px;
+  }
+
+  100% {
+    box-shadow: 
+      1px 1px 5px #0001, -1px -1px 5px #fff1;
+     font-weight: 600;
+    letter-spacing: 2.5px;
+  }
+}
+
+@@-webkit-keyframes shadowLeave {
+  0% {
+    box-shadow: 0 0 0 #fff2, 0 0 #000, inset 0 -1px 0 #000, inset 0 0 0 #fff4;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+  }
+
+  100% {
+    box-shadow: -7px -7px 25px #fff2, 10px 10px 30px #000,
+      inset -1px -1px 2px #000, inset 1px 1px 3px #fff4;
+    font-weight: 400;
+  letter-spacing: 5px;
+  }
+}
+
+
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+<body>
+<a class="container" href="@NavigationUrls.Register">Registor</a>
+<br />
+<a class="container" href="@NavigationUrls.Login">Login</a>
+</body>
+    </NotFound>
+</Router>
+@code {
+    private string UserEmail { get; set; } = string.Empty;
+    void Login()
+    {
+        navigationManager.NavigateTo("/login");
+    }
+
+    void Register()
+    {
+        navigationManager.NavigateTo("/register");
+    }
+}
